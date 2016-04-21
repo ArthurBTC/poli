@@ -1,0 +1,62 @@
+{% extends 'gdpcore/base.html' %}
+
+{% block content %}
+
+<form class="form" method="post" action="/gdpcore/new_cycle/">
+{% csrf_token %}
+	<div class="form-group">
+		<label for="description">Description :</label>
+		<input type="text" class="form-control" id="description" name='description' placeholder="Entrez la description du cycle">
+	</div>
+
+	<label for="description">Proposition principale :</label>
+	<select name = "prop_ini" class="form-control">
+		{% for prop in props %}
+		  <option value="{{prop.id}}">{{prop.autor.username}} : {{prop.text}}</option>
+		{% endfor %}
+	</select>
+	<div> </div>
+	
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+		Créer une proposition de départ
+	</button>
+	
+	
+	<button type="submit" class="btn btn-primary">Créer cycle</button>
+	
+</form>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Créer une proposition de départ</h4>
+      </div>
+      <div class="modal-body">
+	  
+		 <form class="form" method="post" action="/gdpcore/new_starting_proposition/">
+		 {% csrf_token %}
+			<div class="form-group">
+				<label for="description">Proposition :</label>
+				<input type="text" class="form-control" id="proposition" name='proposition' placeholder="Entrez la proposition">
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Créer proposition</button>
+			
+		</form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
